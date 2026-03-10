@@ -57,3 +57,5 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# vetnova-api
+API backend del proyecto VetNova, un sistema para la gestión de una clínica veterinaria.  Permite administrar mascotas, dueños, citas médicas y servicios veterinarios.
