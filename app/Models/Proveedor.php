@@ -6,5 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proveedor extends Model
 {
-    //
+    protected $table = 'proveedores';
+
+    protected $fillable = [
+        'nombre',
+        'direccion',
+        'email',
+        'telefono'
+    ];
+
+    public function productos()
+    {
+        return $this->hasMany(Producto::class, 'proveedor_id');
+    }
 }
