@@ -23,7 +23,6 @@ class User extends Authenticatable implements JWTSubject
         'dni',
         'nombre',
         'apellido',
-        'username',
         'password',
         'email',
         'direccion',
@@ -42,7 +41,7 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
-    public function getJWTPIdentifier()
+    public function getJWTIdentifier()
     {
         return $this->getKey();
     }
