@@ -17,7 +17,7 @@ class AuthController extends Controller
             'nombre' => 'required',
             'apellido' => 'required',
             'email' => 'required|email|unique:usuarios',
-            'password' => 'required|min:8',
+            'password' => 'required|min:6',
             'rol' => 'required'
         ]);
 
@@ -45,7 +45,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         
-        if(!$token = Auth::attempt($credentials)){
+        if(!$token = JWTAuth::attempt($credentials)){
             return response()->json([
                 'error' => 'Credenciales incorrectas'
             ], 401);
