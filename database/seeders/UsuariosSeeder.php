@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class usuarioSeeder extends Seeder
+class UsuariosSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -53,7 +53,31 @@ class usuarioSeeder extends Seeder
             'dni' => '100000004',
             'nombre' => 'Pedro',
             'apellido' => 'Cliente',
-            'email' => 'cliente@vetnova.com',
+            'email' => 'cliente14@vetnova.com',
+            'password' => Hash::make('123456'),
+            'direccion' => 'Bogotá',
+            'zona' => 'urbana',
+            'telefono' => '3000000003',
+            'rol' => 'cliente'
+        ]);
+
+        User::create([
+            'dni' => '100000005',
+            'nombre' => 'Camila',
+            'apellido' => 'Cliente',
+            'email' => 'cliente5@vetnova.com',
+            'password' => Hash::make('123456'),
+            'direccion' => 'Bogotá',
+            'zona' => 'urbana',
+            'telefono' => '3000000003',
+            'rol' => 'cliente'
+        ]);
+
+        User::create([
+            'dni' => '100000006',
+            'nombre' => 'Alejandro',
+            'apellido' => 'Cliente',
+            'email' => 'cliente6@vetnova.com',
             'password' => Hash::make('123456'),
             'direccion' => 'Bogotá',
             'zona' => 'urbana',

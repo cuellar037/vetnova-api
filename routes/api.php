@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoriaController;
 use App\Http\Controllers\API\ProveedorController;
+use App\Http\Controllers\API\ProductoController;
+use App\Http\Controllers\API\MascotaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,15 +19,17 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class,'register']);
 
     Route::middleware('auth:api')->group(function () {
-
         Route::get('profile', [AuthController::class,'profile']);
         Route::post('logout', [AuthController::class,'logout']);
         Route::post('refresh', [AuthController::class,'refresh']);
-
     });
 });
 
-
+/*
+|--------------------------------------------------------------------------
+| API PROTEGIDA
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware(['auth:api'])->group(function () {
 
@@ -35,15 +39,19 @@ Route::middleware(['auth:api'])->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::middleware('role:admin,recepcionista')->group(function () {
-        Route::get('/categorias', [CategoriaController::class, 'index']);
-        Route::get('/categorias/{id}', [CategoriaController::class, 'show']);
-    });
+    Route::prefix('categorias')->group(function () {
 
-    Route::middleware('role:admin')->group(function () {
-        Route::post('/categorias', [CategoriaController::class, 'store']);
-        Route::put('/categorias/{id}', [CategoriaController::class, 'update']);
-        Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy']);
+        Route::middleware('role:admin,recepcionista')->group(function () {
+            Route::get('', [CategoriaController::class, 'index']);
+            Route::get('{id}', [CategoriaController::class, 'show']);
+        });
+
+        Route::middleware('role:admin')->group(function () {
+            Route::post('', [CategoriaController::class, 'store']);
+            Route::put('{id}', [CategoriaController::class, 'update']);
+            Route::delete('{id}', [CategoriaController::class, 'destroy']);
+        });
+
     });
 
     /*
@@ -51,19 +59,62 @@ Route::middleware(['auth:api'])->group(function () {
     | PROVEEDORES
     |--------------------------------------------------------------------------
     */
-    
-    Route::middleware('role:admin,recepcionista')->group(function () {
-        Route::get('/proveedores', [ProveedorController::class, 'index']);
-        Route::get('/proveedores/{id}', [ProveedorController::class, 'show']);
+
+    Route::prefix('proveedores')->group(function () {
+
+        Route::middleware('role:admin,recepcionista')->group(function () {
+            Route::get('', [ProveedorController::class, 'index']);
+            Route::get('{id}', [ProveedorController::class, 'show']);
+        });
+
+        Route::middleware('role:admin')->group(function () {
+            Route::post('', [ProveedorController::class, 'store']);
+            Route::put('{id}', [ProveedorController::class, 'update']);
+            Route::delete('{id}', [ProveedorController::class, 'destroy']);
+        });
+
     });
 
-    
-    Route::middleware('role:admin')->group(function () {
-        Route::post('/proveedores', [ProveedorController::class, 'store']);
-        Route::put('/proveedores/{id}', [ProveedorController::class, 'update']);
-        Route::delete('/proveedores/{id}', [ProveedorController::class, 'destroy']);
+    /*
+    |--------------------------------------------------------------------------
+    | PRODUCTOS
+    |--------------------------------------------------------------------------
+    */
+
+    Route::prefix('productos')->group(function () {
+
+        Route::middleware('role:admin,recepcionista')->group(function () {
+            Route::get('', [ProductoController::class, 'index']);
+            Route::get('{id}', [ProductoController::class, 'show']);
+        });
+
+        Route::middleware('role:admin')->group(function () {
+            Route::post('', [ProductoController::class, 'store']);
+            Route::put('{id}', [ProductoController::class, 'update']);
+            Route::delete('{id}', [ProductoController::class, 'destroy']);
+        });
+
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | MASCOTAS
+    |--------------------------------------------------------------------------
+    */
+
+    Route::prefix('mascotas')->group(function () {
+
+        Route::middleware('role:admin,recepcionista')->group(function () {
+            Route::get('', [MascotaController::class, 'index']);
+            Route::get('{id}', [MascotaController::class, 'show']);
+        });
+
+        Route::middleware('role:admin')->group(function () {
+            Route::post('', [MascotaController::class, 'store']);
+            Route::put('{id}', [MascotaController::class, 'update']);
+            Route::delete('{id}', [MascotaController::class, 'destroy']);
+        });
+
+    });
 
 });
-
