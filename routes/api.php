@@ -6,6 +6,7 @@ use App\Http\Controllers\API\CategoriaController;
 use App\Http\Controllers\API\ProveedorController;
 use App\Http\Controllers\API\ProductoController;
 use App\Http\Controllers\API\MascotaController;
+use App\Http\Controllers\API\CitaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,6 +116,26 @@ Route::middleware(['auth:api'])->group(function () {
             Route::delete('{id}', [MascotaController::class, 'destroy']);
         });
 
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | CITAS
+    |--------------------------------------------------------------------------
+    */
+
+    Route::prefix('citas')->group(function () {
+
+        Route::middleware('role:admin,recepcionista')->group(function () {
+            Route::get('', [CitaController::class, 'index']);
+            Route::get('{id}', [CitaController::class, 'show']);
+        });
+
+        Route::middleware('role:admin,recepcionista')->group(function () {
+            Route::post('', [CitaController::class, 'store']);
+            Route::put('{id}', [CitaController::class, 'update']);
+            Route::delete('{id}', [CitaController::class, 'destroy']);
+        });
     });
 
 });

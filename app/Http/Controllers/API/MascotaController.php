@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Mascota;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MascotaRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\MascotaResource;
 
@@ -28,7 +29,7 @@ class MascotaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MascotaRequest $request)
     {
         $mascota = Mascota::create($request->validated());
 

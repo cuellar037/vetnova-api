@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ProveedoresSeeder::class,
             ProductosSeeder::class,
             MascotasSeeder::class,
+            CitasSeeder::class,
         ]);
     }
 }
