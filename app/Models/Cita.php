@@ -35,6 +35,11 @@ class Cita extends Model
         return $this->belongsTo(User::class, 'doctor_id');
     }
 
+    public function receta()
+    {
+        return $this->hasOne(Receta::class);
+    }
+
     public function withValidator($validator){
         $validator->after(function($validator){
             

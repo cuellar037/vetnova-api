@@ -7,6 +7,7 @@ use App\Http\Controllers\API\ProveedorController;
 use App\Http\Controllers\API\ProductoController;
 use App\Http\Controllers\API\MascotaController;
 use App\Http\Controllers\API\CitaController;
+use App\Http\Controllers\API\RecetaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,6 +137,16 @@ Route::middleware(['auth:api'])->group(function () {
             Route::put('{id}', [CitaController::class, 'update']);
             Route::delete('{id}', [CitaController::class, 'destroy']);
         });
+    });
+    
+
+    /*
+    |--------------------------------------------------------------------------
+    | RECETAS
+    |--------------------------------------------------------------------------
+    */
+    Route::middleware(['auth:api', 'role:doctor,admin'])->group(function () {
+        Route::post('/recetas', [RecetaController::class, 'store']);
     });
 
 });
