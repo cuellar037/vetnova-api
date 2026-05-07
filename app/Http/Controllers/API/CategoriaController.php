@@ -16,7 +16,7 @@ class CategoriaController extends Controller
     public function index(Request $request)
     {
 
-        $query = Categoria::query();
+        $query = Categoria::where('estado', 'Activo');
 
         if($request->search){
             $query->where('nombre', 'like', '%'.$request->search.'%');
@@ -29,9 +29,10 @@ class CategoriaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoriaRequest $request)
     {
         $categoria = Categoria::create($request->validated());
+        $categoria->refresh();
         return new CategoriaResource($categoria);
     }
 
@@ -40,7 +41,9 @@ class CategoriaController extends Controller
      */
     public function show(string $id)
     {
-        $categoria = Categoria::findOrFail($id);
+        $categoria = Categoria::where('estado', 'Activo')
+            ->where('id', $id)
+            ->firstOrFail();
         return new CategoriaResource($categoria);
     }
 
@@ -49,7 +52,9 @@ class CategoriaController extends Controller
      */
     public function update(CategoriaRequest $request, string $id)
     {
-        $categoria = Categoria::findOrFail($id);
+        $categoria = Categoria::where('estado', 'Activo')
+            ->where('id', $id)
+            ->firstOrFail();
         $categoria->update($request->validated());
         return new CategoriaResource($categoria);
     }
@@ -59,8 +64,14 @@ class CategoriaController extends Controller
      */
     public function destroy(string $id)
     {
-        $categoria = Categoria::findOrFail($id);
-        $categoria->delete();
+        $categoria = Categoria::where('estado', 'Activo')
+            ->where('id', $id)
+            ->firstOrFail();
+
+        $categoria->update([
+            'estado' => 'Inactivo'
+        ]);
+
         return response()->json([
             'message' => 'Categoría eliminada correctamente'
         ]);

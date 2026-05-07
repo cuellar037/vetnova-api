@@ -14,22 +14,26 @@ class CategoriasSeeder extends Seeder
     {
         Categoria::create([
             'nombre' => 'Medicamentos',
-            'descripcion' => 'Productos farmacéuticos veterinarios'
+            'descripcion' => 'Productos farmacéuticos veterinarios',
+            'estado' => 'Activo'
         ]);
 
         Categoria::create([
             'nombre' => 'Alimentos',
-            'descripcion' => 'Comida para mascotas'
+            'descripcion' => 'Comida para mascotas',
+            'estado' => 'Activo'
         ]);
 
         Categoria::create([
             'nombre' => 'Accesorios',
-            'descripcion' => 'Collares, correas, juguetes'
+            'descripcion' => 'Collares, correas, juguetes',
+            'estado' => 'Activo'
         ]);
 
         Categoria::create([
             'nombre' => 'Higiene',
-            'descripcion' => 'Shampoo, cuidado personal'
+            'descripcion' => 'Shampoo, cuidado personal',
+            'estado' => 'Activo'
         ]);
     }
 }

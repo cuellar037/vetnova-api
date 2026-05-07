@@ -10,7 +10,12 @@ class Categoria extends Model
 
     protected $fillable = [
         'nombre',
-        'descripcion'
+        'descripcion', 
+        'estado'
+    ];
+
+    protected $attributes = [
+        'estado' => 'Activo'
     ];
 
     public function productos()

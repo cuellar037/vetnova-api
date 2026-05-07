@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->string('nombre');
             $table->text('descripcion')->nullable();
+            $table->enum('estado', ['Activo', 'Inactivo'])->default('Activo');
 
             $table->timestamps();
 
