@@ -11,14 +11,34 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
+    // Login: Metod for user authentication and token generation
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+        
+        if(!$token = JWTAuth::attempt($credentials)){
+            return response()->json([
+                'error' => 'Credenciales incorrectas'
+            ], 401);
+        }
+        
+        return $this->respondWithToken($token);
+    }
+
+    // Register: Method for user registration
     public function register(Request $request)
     {
         $request->validate([
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'email' => 'required|email|unique:usuarios',
-            'password' => 'required|min:6',
-            'rol' => 'required'
+            'dni'           => 'required|string|max:10|unique:usuarios,dni',
+            'nombre'        => 'required|string|max:100',
+            'apellido'      => 'required|string|max:100',
+            'email'         => 'required|email|unique:usuarios,email',
+            'password'      => 'required|min:6',
+            'direccion'     => 'nullable|string|max:255',
+            'zona'          => 'nullable|in:urbana,rural',
+            'telefono'      => 'required|string|max:10',
+            'telefono_alt'  => 'nullable|string|max:10',
+            'rol'           => 'required|in:admin,doctor,recepcionista,cliente'
         ]);
 
         $user = User::create([
@@ -41,17 +61,35 @@ class AuthController extends Controller
         ]);
     }
 
-    public function login(Request $request)
+    // Profile: Method to get the authenticated user's profile information
+    public function profile()
     {
-        $credentials = $request->only('email', 'password');
-        
-        if(!$token = JWTAuth::attempt($credentials)){
-            return response()->json([
-                'error' => 'Credenciales incorrectas'
-            ], 401);
-        }
-        
-        return $this->respondWithToken($token);
+        return response()->json([
+            'id' => Auth::user()->id,
+            'nombre' => Auth::user()->nombre,
+            'apellido' => Auth::user()->apellido,
+            'email' => Auth::user()->email,
+            'direccion' => Auth::user()->direccion,
+            'zona' => Auth::user()->zona,
+            'telefono' => Auth::user()->telefono,
+            'telefono_alt' => Auth::user()->telefono_alt,
+            'rol' => Auth::user()->rol,
+        ]);
+    }
+
+    // Logout: Method for user logout and token invalidation
+    public function logout()
+    {
+        Auth::logout();
+        return response()->json(['message' => 'Sesion cerrada correctamente']);
+    }
+
+    // Refresh: Method to refresh the JWT token
+    public function refresh()
+    {
+        return $this->respondWithToken(
+            JWTAuth::parseToken()->refresh()
+        );
     }
 
     public function respondWithToken($token)
