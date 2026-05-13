@@ -20,7 +20,7 @@ Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class,'login']);
     Route::post('register', [AuthController::class,'register']);
 
-    Route::middleware('auth:api')->group(function () {
+    Route::middleware(['auth:api', 'check.status'])->group(function () {
         Route::get('profile', [AuthController::class,'profile']);
         Route::post('logout', [AuthController::class,'logout']);
         Route::post('refresh', [AuthController::class,'refresh']);
@@ -33,7 +33,7 @@ Route::prefix('auth')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware(['auth:api', 'check.status'])->group(function () {
 
     /*
     |--------------------------------------------------------------------------
@@ -145,7 +145,7 @@ Route::middleware(['auth:api'])->group(function () {
     | RECETAS
     |--------------------------------------------------------------------------
     */
-    Route::middleware(['auth:api', 'role:doctor,admin'])->group(function () {
+    Route::middleware('role:doctor,admin')->group(function () {
         Route::post('/recetas', [RecetaController::class, 'store']);
     });
 

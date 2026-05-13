@@ -34,6 +34,8 @@ return new class extends Migration
                 'cliente'
             ])->default('cliente');
 
+            $table->enum('estado', ['Activo', 'Inactivo'])->default('Activo');
+
             $table->timestamps();
         });
     }

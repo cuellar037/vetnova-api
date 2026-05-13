@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'role' => App\Http\Middleware\RoleMiddleware::class,
+            'check.status' => App\Http\Middleware\CheckUserStatus::class,
             
         ]);
         $middleware->redirectGuestsTo(fn ()=> null);

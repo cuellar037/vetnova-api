@@ -29,7 +29,8 @@ class User extends Authenticatable implements JWTSubject
         'zona',
         'telefono',
         'telefono_alt',
-        'rol'
+        'rol',
+        'estado',
     ];
 
     /**

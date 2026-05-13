@@ -22,7 +22,8 @@ class UsuariosSeeder extends Seeder
             'direccion' => 'VetNova Clinic',
             'zona' => 'urbana',
             'telefono' => '3000000000',
-            'rol' => 'admin'
+            'rol' => 'admin', 
+            'estado' => 'Activo'
         ]);
 
         User::create([
@@ -34,7 +35,8 @@ class UsuariosSeeder extends Seeder
             'direccion' => 'Clinica',
             'zona' => 'urbana',
             'telefono' => '3000000001',
-            'rol' => 'doctor'
+            'rol' => 'doctor',
+            'estado' => 'Activo'
         ]);
 
         User::create([
@@ -46,7 +48,8 @@ class UsuariosSeeder extends Seeder
             'direccion' => 'Clinica',
             'zona' => 'urbana',
             'telefono' => '3000000002',
-            'rol' => 'recepcionista'
+            'rol' => 'recepcionista',
+            'estado' => 'Activo'
         ]);
 
         User::create([
@@ -58,7 +61,8 @@ class UsuariosSeeder extends Seeder
             'direccion' => 'Bogotá',
             'zona' => 'urbana',
             'telefono' => '3000000003',
-            'rol' => 'cliente'
+            'rol' => 'cliente',
+            'estado' => 'Activo'
         ]);
 
         User::create([
@@ -70,7 +74,8 @@ class UsuariosSeeder extends Seeder
             'direccion' => 'Bogotá',
             'zona' => 'urbana',
             'telefono' => '3000000003',
-            'rol' => 'cliente'
+            'rol' => 'cliente',
+            'estado' => 'Activo'
         ]);
 
         User::create([
@@ -82,7 +87,8 @@ class UsuariosSeeder extends Seeder
             'direccion' => 'Bogotá',
             'zona' => 'urbana',
             'telefono' => '3000000003',
-            'rol' => 'cliente'
+            'rol' => 'cliente',
+            'estado' => 'Activo'
         ]);
     }
 }

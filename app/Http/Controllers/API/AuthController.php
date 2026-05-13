@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -15,6 +16,14 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if($user && $user->estado === 'Inactivo'){
+            return response()->json([
+                'error' => 'Usuario inactivo, comuniquese con el administrador'
+            ], 403);
+        }
         
         if(!$token = JWTAuth::attempt($credentials)){
             return response()->json([
@@ -26,20 +35,9 @@ class AuthController extends Controller
     }
 
     // Register: Method for user registration
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $request->validate([
-            'dni'           => 'required|string|max:10|unique:usuarios,dni',
-            'nombre'        => 'required|string|max:100',
-            'apellido'      => 'required|string|max:100',
-            'email'         => 'required|email|unique:usuarios,email',
-            'password'      => 'required|min:6',
-            'direccion'     => 'nullable|string|max:255',
-            'zona'          => 'nullable|in:urbana,rural',
-            'telefono'      => 'required|string|max:10',
-            'telefono_alt'  => 'nullable|string|max:10',
-            'rol'           => 'required|in:admin,doctor,recepcionista,cliente'
-        ]);
+        $request->validated();
 
         $user = User::create([
             'dni' => $request->dni,
@@ -52,7 +50,8 @@ class AuthController extends Controller
             'zona' => $request->zona,
             'telefono' => $request->telefono,
             'telefono_alt' => $request->telefono_alt,
-            'rol' => $request->rol
+            'rol' => $request->rol,
+            'estado' => 'Activo'
         ]);
 
         return response()->json([
@@ -74,6 +73,7 @@ class AuthController extends Controller
             'telefono' => Auth::user()->telefono,
             'telefono_alt' => Auth::user()->telefono_alt,
             'rol' => Auth::user()->rol,
+            'estado' => Auth::user()->estado,
         ]);
     }
 
